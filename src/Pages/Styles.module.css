@@ -7,3 +7,10 @@
     justify-content: center;
     padding: 50px;
 }
+.serchComponent{
+    width: 20%;
+    margin: auto;;
+    background-color: rgb(226, 241, 197);
+    border-radius: 10px;
+    margin-top: 20px;
+}

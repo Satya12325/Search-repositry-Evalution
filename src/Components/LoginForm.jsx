@@ -2,10 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import { connect } from "react-redux";
-import {login} from "../Redux/Reducer"
 import {useState} from "react";
-
+import { useDispatch } from "react-redux";
+import {useSelector} from "react-redux";
+import { loginSuccess } from "../redux/auth/action";
+import {Redirect} from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,22 @@ function Inputs() {
   const classes = useStyles();
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
-  return (
+     const dispatch = useDispatch();
+     const Auth = useSelector((state) => state.auth.Auth)
+
+     const handleAdd = () => {
+        const action = loginSuccess(Date.now());
+        dispatch(action);
+       
+      };
+      
+      if(Auth){
+          return <Redirect to="/search"/>
+      }
+
+
+
+     return (
     <form className={classes.root} noValidate autoComplete="off" >
       <Input
         type="email"
@@ -38,26 +54,15 @@ function Inputs() {
         onChange={e=> setPassword(e.target.value)}
       />
       <br/>
-      <Button variant="contained" color="primary" >
+     
+      <Button variant="contained" color="primary" onClick={handleAdd}>
         Login
       </Button>
+     
+      
     </form>
   );
 }
 
-const mapStatetoprops = (state) => {
-    return {
-        isPanding: state.isPanding,
-        isSucess: state.isSucess,
-        LoginError: state.LoginError
-    };
 
-}
-
-const mapDispatchToprops = (dispatch) => {
-    return {
-        login:(email, password)=> dispatch(login(email, password))
-    }
-}
-
-export default connect(mapStatetoprops, mapDispatchToprops)(Inputs)
+export default Inputs;
