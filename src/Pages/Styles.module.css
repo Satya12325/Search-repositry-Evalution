@@ -1,0 +1,9 @@
+.loginForm{
+    width: 20%;
+    margin: auto;
+    background: rgb(246, 247, 252);
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
