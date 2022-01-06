@@ -10,7 +10,7 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 
 import SearchIcon from '@material-ui/icons/Search';
-
+import FullWidthGrid from '../Components/Card'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,21 +40,22 @@ const useStyles = makeStyles((theme) => ({
 
 function Search(){
     
-    const [data, setData] = useState("");
+    const [dato, setDato] = useState("");
     const dispatch =  useDispatch();
-    const getDato =  (data) =>{
-        return fetch(`https://api.github.com/search/users?q=${data}`)
+    const getData =  (dato) =>{
+        return fetch(`https://api.github.com/search/repositories?q=${dato}`)
         .then(res => res.json())
         .then((res) => {
-            const getresult = getDataRepositry(res.items);
-            dispatch(getresult);
+            const getData = getDataRepositry(res.items);
+            console.log(res);
+            dispatch(getData);
         })
     
     }
 
-    const {dato} = useSelector((state) => state.app)
-    const handleSearch = () => {
-        getDato(data)
+    const {data} = useSelector((state) => state.app)
+    const handleClick = () => {
+        getData(dato)
     }
 
     const classes = useStyles();
@@ -66,18 +67,26 @@ function Search(){
       <InputBase
         className={classes.input}
         placeholder="Search Git hub Repositry"
-        value={data}
-        onChange={(e)=>setData(e.target.value)}
+        value={dato}
+        onChange={(e)=>setDato(e.target.value)}
       />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search"  onClick={handleSearch}>
+      <IconButton type="submit" className={classes.iconButton} aria-label="search"  onClick={handleClick}>
         <SearchIcon />
       </IconButton>
       
      </div>
-     <div>
+     <div className="App">
          {
-             dato.map((item) => {
-                 return <div key={item.id}>{item.login}</div>;
+             data.map((item) => {
+                 return <FullWidthGrid key={item.id}
+                 id={item.id}
+                 repo={item.description}
+                 title={item.full_name} 
+                 />
+                 
+                
+
+                
              })
          }
      </div>

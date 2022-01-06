@@ -1,10 +1,10 @@
 
 
-export const loginSuccess = (token) => {
+export const loginSuccess = (Auth) => {
   return {
     type: 'LOGIN_SUCCESS',
     payload: {
-      token: token
+      isAuth: Auth
     }
   };
 };
